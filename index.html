@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Jornada Fitness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Teko:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #0a0e17;
+            --cor-principal: #161b33;
+            --cor-secundaria: #2a3a5e; 
+            --cor-destaque: #00d4ff;
+            --cor-texto: #e6f7ff;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .caixa-principal {
+            background-color: var(--cor-principal);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+        }
+
+        h1 {
+            color: var(--cor-destaque);
+            margin-bottom: 30px;
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .caixa-perguntas {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            padding: 0 10px;
+        }
+
+        .caixa-alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            background-color: var(--cor-secundaria);
+            color: var(--cor-texto);
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        button:hover {
+            background-color: var(--cor-destaque);
+            color: var(--cor-principal);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .caixa-resultado {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            background-color: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .botao-reiniciar {
+            margin-top: 25px;
+            background-color: var(--cor-destaque);
+            color: var(--cor-principal);
+            font-weight: bold;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .botao-reiniciar:hover {
+            background-color: #00c4eb;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .caixa-perguntas {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="caixa-principal">
+        <h1>Sua Jornada Fitness</h1>
+        <div class="caixa-perguntas"></div>
+        <div class="caixa-alternativas"></div>
+        <div class="caixa-resultado">
+            <p class="texto-resultado"></p>
+            <button class="botao-reiniciar" style="display: none;">Começar Novamente</button>
+        </div>
+    </div>
+
+    <script>
+        const caixaPerguntas = document.querySelector(".caixa-perguntas");
+        const caixaAlternativas = document.querySelector(".caixa-alternativas");
+        const textoResultado = document.querySelector(".texto-resultado");
+        const botaoReiniciar = document.querySelector(".botao-reiniciar");
+
+        const perguntas = [
+            {
+                enunciado: "Você decidiu começar na academia. Na primeira semana, o instrutor pergunta qual seu principal objetivo. O que responde?",
+                alternativas: [
+                    {
+                        texto: "Quero ganhar massa muscular e ficar mais forte",
+                        afirmacao: "Você focou em treinos pesados com bastante carga e proteína na dieta."
+                    },
+                    {
+                        texto: "Meu objetivo é perder gordura e definir o corpo",
+                        afirmacao: "Optou por treinos cardio combinados com musculação e dieta com déficit calórico."
+                    },
+                    {
+                        texto: "Busco melhorar minha saúde e resistência física",
+                        afirmacao: "Escolheu um treino equilibrado com foco em qualidade de vida e alimentação saudável."
+                    }
+                ]
+            },
+            {
+                enunciado: "Na segunda semana, você sente muitas dores musculares. Como reage?",
+                alternativas: [
+                    {
+                        texto: "Descansa até a dor passar completamente",
+                        afirmacao: "Seu progresso foi mais lento no início por pausas longas entre treinos."
+                    },
+                    {
+                        texto: "Faz treinos leves e alongamentos",
+                        afirmacao: "Manteve a consistência adaptando a intensidade quando necessário."
+                    },
+                    {
+                        texto: "Vai treinar normalmente, ignorando a dor",
+                        afirmacao: "Teve bons resultados mas sofreu algumas lesões por overtraining."
+                    }
+                ]
+            },
+            {
+                enunciado: "Após um mês, você nota que não está evoluindo como esperado. O que faz?",
+                alternativas: [
+                    {
+                        texto: "Contrata um personal trainer para acompanhamento",
+                        afirmacao: "O investimento em orientação profissional acelerou seus resultados."
+                    },
+                    {
+                        texto: "Pesquisa na internet e ajusta o treino sozinho",
+                        afirmacao: "Aprendeu muito por conta própria mas cometeu alguns erros no caminho."
+                    },
+                    {
+                        texto: "Mantém a rotina e confia no processo",
+                        afirmacao: "Com paciência, começou a ver resultados consistentes após 3 meses."
+                    }
+                ]
+            },
+            {
+                enunciado: "Na alimentação, você tem dificuldade em seguir a dieta. Qual estratégia adota?",
+                alternativas: [
+                    {
+                        texto: "Contrata um nutricionista esportivo",
+                        afirmacao: "Com um plano alimentar personalizado, seus resultados melhoraram drasticamente."
+                    },
+                    {
+                        texto: "Faz pequenas substituições saudáveis",
+                        afirmacao: "Mudanças graduais tornaram a dieta mais sustentável a longo prazo."
+                    },
+                    {
+                        texto: "Não se preocupa muito com dieta, foca no treino",
+                        afirmacao: "Seu desempenho nos treinos foi bom mas os resultados físicos foram limitados."
+                    }
+                ]
+            },
+            {
+                enunciado: "Após 6 meses, você atinge seu primeiro grande objetivo. Qual será seu próximo passo?",
+                alternativas: [
+                    {
+                        texto: "Estabelecer metas mais desafiadoras",
+                        afirmacao: "Você se tornou um atleta amador e começou a competir em pequenos campeonatos."
+                    },
+                    {
+                        texto: "Manter os resultados conquistados",
+                        afirmacao: "Encontrou um equilíbrio perfeito entre saúde, estética e qualidade de vida."
+                    },
+                    {
+                        texto: "Começar a ajudar outros iniciantes",
+                        afirmacao: "Seu exemplo inspirou amigos e familiares a adotarem um estilo de vida saudável."
+                    }
+                ]
+            }
+        ];
+
+        let atual = 0;
+        let perguntaAtual;
+        let historiaFinal = "";
+
+        function mostraPergunta() {
+            if (atual >= perguntas.length) {
+                mostraResultado();
+                return;
+            }
+            perguntaAtual = perguntas[atual];
+            caixaPerguntas.textContent = perguntaAtual.enunciado;
+            caixaAlternativas.textContent = "";
+            mostraAlternativas();
+        }
+
+        function mostraAlternativas() {
+            for (const alternativa of perguntaAtual.alternativas) {
+                const botaoAlternativas = document.createElement("button");
+                botaoAlternativas.textContent = alternativa.texto;
+                botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
+                caixaAlternativas.appendChild(botaoAlternativas);
+            }
+        }
+
+        function respostaSelecionada(opcaoSelecionada) {
+            const afirmacoes = opcaoSelecionada.afirmacao;
+            historiaFinal += afirmacoes + " ";
+            atual++;
+            mostraPergunta();
+        }
+
+        function mostraResultado() {
+            caixaPerguntas.textContent = "Um ano depois...";
+            textoResultado.textContent = "Sua jornada fitness: " + historiaFinal + " Hoje você se tornou uma inspiração para muitas pessoas na academia!";
+            caixaAlternativas.textContent = "";
+            
+            botaoReiniciar.style.display = "block";
+            botaoReiniciar.addEventListener("click", reiniciarJogo);
+        }
+
+        function reiniciarJogo() {
+            atual = 0;
+            historiaFinal = "";
+            textoResultado.textContent = "";
+            botaoReiniciar.style.display = "none";
+            mostraPergunta();
+        }
+
+        mostraPergunta();
+    </script>
+</body>
+</html>
